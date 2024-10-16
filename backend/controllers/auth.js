@@ -98,16 +98,26 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        res.cookie("jwt", "", {maxAge:0});
-        res.status(200).json({message: "Logged out successfully!"});
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ message: "Logged out successfully!" });
     } catch (error) {
         console.log("Error in logout functionality:", error.message)
     }
 };
 
+const authCheck = async (req, res) => {
+    try {
+        const User = await user.findById(req.user._id).select("-password");
+        res.status(200).json(User);
+    } catch (error) {
+        console.log("Error in checkAuth controller", error.message);
+        res.status(500).json({ error: "Internal Server Error." });
+    }
+};
 
 module.exports = {
     signup,
     login,
-    logout
+    logout,
+    authCheck
 };
