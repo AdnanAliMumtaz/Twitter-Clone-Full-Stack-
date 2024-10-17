@@ -5,10 +5,17 @@ const { connectMongoDB } = require('../backend/db/connection');
 const cookieParse = require('cookie-parser');
 const authRoutes = require('../backend/routes/auth');
 const userRoutes = require('../backend/routes/users');
+const cloudinary = require('cloudinary').v2;
 
-
-// ENV Variables
+// Configurations
 env.config();
+cloudinary.config(
+    {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+    }
+);
 
 // Middlewares
 app.use(express.json());
@@ -28,3 +35,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);
 });
+
+
+
