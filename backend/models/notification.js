@@ -24,6 +24,4 @@ const notificationSchema = new Schema({
 
 const Notification = model("Notification", notificationSchema);
 
-module.exports = {
-    Notification 
-}
+module.exports = Notification;
