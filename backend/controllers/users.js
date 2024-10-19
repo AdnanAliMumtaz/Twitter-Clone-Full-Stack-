@@ -1,5 +1,5 @@
 const { user } = require('../models/user');
-const { Notification } = require('../models/notification');
+const Notification = require('../models/notification');
 const bcrypt = require('bcryptjs');
 const cloudinary = require('cloudinary').v2;
 
