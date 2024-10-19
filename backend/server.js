@@ -5,6 +5,7 @@ const { connectMongoDB } = require('../backend/db/connection');
 const cookieParse = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const notificationsRoutes = require('./routes/notifications');
 const cloudinary = require('cloudinary').v2;
 const postRoutes = require('./routes/post');
 
@@ -30,6 +31,7 @@ connectMongoDB();
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/notifications', notificationsRoutes);
 
 
 const PORT = process.env.PORT || 5000;
