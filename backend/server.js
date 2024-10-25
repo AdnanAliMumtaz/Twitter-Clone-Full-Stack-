@@ -34,7 +34,7 @@ app.use('/api/posts', postRoutes);
 app.use('/api/notifications', notificationsRoutes);
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);

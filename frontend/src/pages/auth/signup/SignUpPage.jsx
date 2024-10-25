@@ -42,6 +42,7 @@ const SignUpPage = () => {
         return data;
       } catch (error) {
         console.error(error);
+        // toast.error(error.message);
         throw error;
       }
     },
@@ -79,7 +80,7 @@ const SignUpPage = () => {
               placeholder="Email"
               name="email"
               onChange={handleInputChange}
-              value={formData.fullName}
+              value={formData.email}
             />
           </label>
           <div className="flex gap-4 flex-wrap">
