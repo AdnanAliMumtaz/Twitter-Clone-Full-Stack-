@@ -25,18 +25,6 @@ const ProfilePage = () => {
     const isLoading = false;
     const isMyProfile = true;
 
-    const user = {
-        _id: "1",
-        fullName: "John Doe",
-        username: "johndoe",
-        profileImg: "/avatars/boy2.png",
-        coverImg: "/cover.png",
-        bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        link: "https://youtube.com/@asaprogrammer_",
-        following: ["1", "2", "3"],
-        followers: ["1", "2", "3"],
-    };
-
     const handleImgChange = (e, state) => {
         const file = e.target.files[0];
         if (file) {
@@ -53,9 +41,9 @@ const ProfilePage = () => {
         <>
             <div className="flex-[4_4_0] border-r border-gray-700 min-h-screen">
                 {isLoading && <ProfileHeaderSkeleton />}
-                {!isLoading && !user && <p className="text-center text-lg mt-4">User not found!</p>}
+                {!isLoading && !authUser && <p className="text-center text-lg mt-4">User not found!</p>}
                 <div className="flex flex-col">
-                    {!isLoading && user && (
+                    {!isLoading && authUser && (
                         <>
                             <div className="flex gap-10 px-4 py-2 items-center">
                                 <Link to='/'>
@@ -63,13 +51,13 @@ const ProfilePage = () => {
 
                                 </Link>
                                 <div className="flex flex-col">
-                                    <p className="font-bold text-lg">{user?.fullName}</p>
+                                    <p className="font-bold text-lg">{authUser?.fullName}</p>
                                     <span className="text-sm text-slate-500">{POSTS?.length} posts</span>
                                 </div>
                             </div>
                             <div className="relative group/cover">
                                 <img
-                                    src={coverImg || user?.coverImg || "/cover.png"}
+                                    src={coverImg || authUser?.coverImg || "/cover.png"}
                                     className="h-52 w-full object-cover"
                                     alt='cover image'
                                 />
@@ -85,7 +73,7 @@ const ProfilePage = () => {
                                 <input type="file" hidden accept="image/*" ref={profileImgRef} onChange={(e) => handleImgChange(e, "profileImg")} />
                                 <div className="avatar absolute -bottom-16 left-4">
                                     <div className="w-32 rounded-full relative group/avatar">
-                                        <img src={profileImg || user?.profileImg || "/avatar-placeholder.png"} />
+                                        <img src={profileImg || authUser?.profileImg || "/avatar-placeholder.png"} />
                                         <div className="absolute top-5 right-3 p-1 bg-primary rounded-full group-hover/avatar:opacity-100 opacity-0 cursor-pointer">
                                             {isMyProfile && (
                                                 <MdEdit
@@ -119,13 +107,13 @@ const ProfilePage = () => {
 
                             <div className="flex flex-col gap-4 mt-14 px-4">
                                 <div className="flex flex-col">
-                                    <span className="font-bold text-lg">{user?.fullName}</span>
-                                    <span className="text-sm text-slate-500">@{user?.username}</span>
-                                    <span className="text-sm my-1">{user?.bio}</span>
+                                    <span className="font-bold text-lg">{authUser?.fullName}</span>
+                                    <span className="text-sm text-slate-500">@{authUser?.username}</span>
+                                    <span className="text-sm my-1">{authUser?.bio}</span>
                                 </div>
 
                                 <div className="flex gap-2 flex-wrap">
-                                    {user?.link && (
+                                    {authUser?.link && (
                                         <div className="flex gap-1 items-center">
                                             <>
                                                 <FaLink className="flex gap-1 items-center" />
@@ -147,11 +135,11 @@ const ProfilePage = () => {
                                 </div>
                                 <div className="flex gap-2">
                                     <div className="flex gap-1 items-center">
-                                        <span className="font-bold text-xs">{user?.following.length}</span>
+                                        <span className="font-bold text-xs">{authUser?.following.length}</span>
                                         <span className="text-slate-500 text-xs">Following</span>
                                     </div>
                                     <div className="flex gap-1 items-center">
-                                        <span className="font-bold text-xs">{user?.followers.length}</span>
+                                        <span className="font-bold text-xs">{authUser?.followers.length}</span>
                                         <span className="text-slate-500 text-xs">Followers</span>
                                     </div>
                                 </div>

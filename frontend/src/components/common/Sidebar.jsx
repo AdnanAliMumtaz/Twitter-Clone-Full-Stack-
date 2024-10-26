@@ -25,6 +25,7 @@ const Sidebar = () => {
             }
         },
         onSuccess: () => {
+            // Recalls the authUser data so new data is dislayed
             queryClient.invalidateQueries({ queryKey: ["authUser"] });
         },
         onError: () => {
