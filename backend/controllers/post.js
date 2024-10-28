@@ -176,6 +176,7 @@ const likeUnlikePost = async (req, res) => {
     try {
         const postId = req.params.id;
         const userId = req.user._id;
+        let updateLikes = 0;
 
         const post = await Post.findById(postId);
         if (!post) return res.status(404).json({ error: "Post not found!" });
@@ -186,11 +187,11 @@ const likeUnlikePost = async (req, res) => {
         if (userLikedPost) {
             // Unlike the post
             await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
-
-            // Adding the posts in the liked Post section
             await user.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
 
-            return res.status(200).json({ message: "Post unliked successfully!" });
+            updateLikes = post.likes.filter(id => id.toString() !== userId.toString());
+
+            return res.status(200).json(updateLikes);
         } else {
             // Like the post
             post.likes.push(userId);
@@ -205,7 +206,8 @@ const likeUnlikePost = async (req, res) => {
             });
             await notification.save();
 
-            return res.status(200).json({ message: "Post liked successfully!" });
+            updateLikes = post.likes;
+            return res.status(200).json(updateLikes);
         }
 
         // return res.status(200).json(post);
