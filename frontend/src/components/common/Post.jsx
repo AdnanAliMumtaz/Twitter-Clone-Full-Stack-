@@ -30,9 +30,7 @@ const Post = ({ post }) => {
         });
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.error || "Something went wrong!");
-
         return data;
       } catch (error) {
         throw new Error(error);
@@ -43,7 +41,6 @@ const Post = ({ post }) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     }
   });
-
 
   const { mutate: likePost, isPending: isLiking } = useMutation({
     mutationFn: async () => {
