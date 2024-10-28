@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 
-const EditProfileModal = () => {
+const EditProfileModal = ({ authUser }) => {
     const [formData, setFormData] = useState({
         fullName: "",
         username: "",
@@ -11,9 +12,25 @@ const EditProfileModal = () => {
         currentPassword: "",
     });
 
+    const { updateProfile, isUpdatingProfile } = useUpdateUserProfile();
+    
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    useEffect(() => {
+        if (authUser) {
+            setFormData({
+                fullName: authUser.fullName,
+                username: authUser.username,
+                email: authUser.email,
+                bio: authUser.bio,
+                link: authUser.link,
+                newPassword: "",
+                currentPassword: ""
+            });
+        }
+    }, [authUser]);
 
     return (
         <>
@@ -30,7 +47,7 @@ const EditProfileModal = () => {
                         className="flex flex-col gap-4"
                         onSubmit={(e) => {
                             e.preventDefault();
-                            alert("Profile updated successfully!");
+                            updateProfile(formData);
                         }}
                     >
                         <div className="flex flex-wrap gap-2">
@@ -73,29 +90,31 @@ const EditProfileModal = () => {
                                 type="password"
                                 placeholder="Current Password"
                                 className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                                value={formData.currentPassword}
+                                name="currentPassword"
+                                onChange={handleInputChange}
+                            />
+                            <input
+                                type="password"
+                                placeholder="New Password"
+                                className="flex-1 input border border-gray-700 rounded p-2 input-md"
                                 value={formData.newPassword}
                                 name="newPassword"
                                 onChange={handleInputChange}
-                            />
-                            <input 
-                            type="password"
-                            placeholder="New Password"
-                            className="flex-1 input border border-gray-700 rounded p-2 input-md"
-                            value={formData.newPassword}
-                            name="newPassword"
-                            onChange={handleInputChange}  
-                            
+
                             />
                         </div>
-                        <input 
-                        type="text"
-                        placeholder="Link"
-                        className="flex-1 input border border-gray-700 rounded p-2 input-md"
-                        value={formData.link}
-                        name='link'
-                        onChange={handleInputChange}
+                        <input
+                            type="text"
+                            placeholder="Link"
+                            className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                            value={formData.link}
+                            name='link'
+                            onChange={handleInputChange}
                         />
-                        <button className="btn btn-primary rounded-full btn-sm text-white">Update</button>
+                        <button className="btn btn-primary rounded-full btn-sm text-white">
+                            {isUpdatingProfile ? "Updating..." : "Update"}
+                        </button>
                     </form>
                 </div>
                 <form method="dialog" className="modal-backdrop">
@@ -103,7 +122,7 @@ const EditProfileModal = () => {
                 </form>
             </dialog>
         </>
-    )
-}
+    );
+};
 
 export default EditProfileModal;

@@ -154,7 +154,7 @@ const ProfilePage = () => {
                                             <>
                                                 <FaLink className="flex gap-1 items-center" />
                                                 <a
-                                                    href="https://youtube.com/@asaprogrammer_"
+                                                    href="/"
                                                     target="_blank"
                                                     rel="noreferrer"
                                                     className="text-sm text-blue-500 hover:underline"

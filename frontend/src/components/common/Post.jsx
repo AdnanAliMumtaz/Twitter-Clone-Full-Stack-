@@ -39,7 +39,7 @@ const Post = ({ post }) => {
     onSuccess: () => {
       toast.success("Post deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
-    }
+    } 
   });
 
   const { mutate: likePost, isPending: isLiking } = useMutation({
