@@ -33,12 +33,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/notifications', notificationsRoutes);
 
-
+// Starts the server
 const PORT = process.env.PORT || 5001;
-
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);
 });
-
-
-

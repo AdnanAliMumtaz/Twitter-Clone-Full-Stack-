@@ -5,13 +5,13 @@ import Posts from "../../components/common/Posts";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
 import EditProfileModal from "./EditProfileModal";
 
-import { POSTS } from "../../utils/db/dummy";
+// import { POSTS } from "../../utils/db/dummy";
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useFollow from "../../hooks/useFollow";
 import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 import { formatMemberSinceDate } from "../../utils/date";
@@ -44,6 +44,23 @@ const ProfilePage = () => {
             }
         }
     });
+
+    const { data: posts, } = useQuery({
+        queryKey: ["posts"],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`/api/posts/user/${username}`);
+                const data = await res.json();
+
+                if (!res.ok) throw new Error(data.error || "Something went wrong!");
+                return data;
+            } catch (error) {
+                throw new Error(error);
+            }
+        }
+    });
+
+
 
     const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
 
@@ -82,7 +99,7 @@ const ProfilePage = () => {
                                 </Link>
                                 <div className="flex flex-col">
                                     <p className="font-bold text-lg">{user?.fullName}</p>
-                                    <span className="text-sm text-slate-500">{POSTS?.length} posts</span>
+                                    <span className="text-sm text-slate-500">{posts?.length} posts</span>
                                 </div>
                             </div>
                             <div className="relative group/cover">

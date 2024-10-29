@@ -7,13 +7,13 @@ const signup = async (req, res) => {
     try {
         const { username, fullName, email, password } = req.body;
 
-        // Validate the email address
+        // Basic email format check (e.g., example@gmail.com)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({ error: "Invalid email format." });
         }
 
-        // Check if the user already exists
+        // Check if username or email already exists
         const existingUser = await user.findOne({
             $or: [
                 { username },
@@ -26,15 +26,14 @@ const signup = async (req, res) => {
             return res.status(400).json({ error: errorMessage });
         }
 
-        // Creating a new user
+        // Check password length
         if (password.length < 6) {
             return res.status(400).json({ error: "Password must be atleast 6 characters long!" });
         }
 
-        //// Hashing the password
+        // Hash the password and create a new user
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
         const newUser = new user({
             fullName,
             username,
@@ -43,9 +42,11 @@ const signup = async (req, res) => {
         });
 
         if (newUser) {
-            generateTokenAndSetCookie(newUser._id, res);
+            generateTokenAndSetCookie(newUser._id, res); // Sets auth token
             await newUser.save();
-            res.status(201).json({
+
+            // Send basic user data in response
+            return res.status(201).json({
                 _id: newUser._id,
                 fullName: newUser.fullName,
                 username: newUser.username,
@@ -56,12 +57,12 @@ const signup = async (req, res) => {
                 coverImg: newUser.coverImg || null
             });
         } else {
-            res.status(400).json({ error: "Invalid User Data!" });
+            return res.status(400).json({ error: "Invalid User Data!" });
         }
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error." });
+        return res.status(500).json({ error: "Internal Server Error." });
     }
 };
 
@@ -69,17 +70,19 @@ const login = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        // Finding user in database
+        // Find user by username in database
         const User = await user.findOne({ username });
-        const isPasswordCorrect = await bcrypt.compare(password, User?.password || '');
 
+        // Check if user exists and password is correct
+        const isPasswordCorrect = await bcrypt.compare(password, User?.password || '');
         if (!User || !isPasswordCorrect) {
             return res.status(400).json({ error: "Invalid Credentials!" });
         }
 
-        generateTokenAndSetCookie(User._id, res);
+        generateTokenAndSetCookie(User._id, res); // Sets auth token
 
-        res.status(200).json({
+        // Send basic user data in response
+        return res.status(200).json({
             _id: User._id,
             fullName: User.fullName,
             username: User.username,
@@ -92,14 +95,16 @@ const login = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error." });
+        return res.status(500).json({ error: "Internal Server Error." });
     }
 };
 
 const logout = async (req, res) => {
     try {
+        // Clears the JWT cookie to logout
         res.cookie("jwt", "", { maxAge: 0 });
-        res.status(200).json({ message: "Logged out successfully!" });
+
+        return res.status(200).json({ message: "Logged out successfully!" });
     } catch (error) {
         console.log("Error in logout functionality:", error.message)
     }
@@ -107,11 +112,12 @@ const logout = async (req, res) => {
 
 const authCheck = async (req, res) => {
     try {
+        // Retrieve user by ID, excluding the password field
         const User = await user.findById(req.user._id).select("-password");
-        res.status(200).json(User);
+        return res.status(200).json(User);
     } catch (error) {
         console.log("Error in checkAuth controller", error.message);
-        res.status(500).json({ error: "Internal Server Error." });
+        return res.status(500).json({ error: "Internal Server Error." });
     }
 };
 
