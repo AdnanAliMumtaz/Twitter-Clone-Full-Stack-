@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-
 import XSvg from "../../../components/svgs/X";
-
 import { MdOutlineMail } from "react-icons/md";
 import { MdPassword } from "react-icons/md";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const LoginPage = () => {
@@ -49,9 +46,6 @@ const LoginPage = () => {
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-
-
 
   return (
     <div className='max-w-screen-lg mx-auto flex h-screen'>

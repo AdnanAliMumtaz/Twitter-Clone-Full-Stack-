@@ -1,5 +1,4 @@
 import XSvg from "../svgs/X";
-
 import { MdHomeFilled } from "react-icons/md";
 import { IoNotifications } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
@@ -33,7 +32,7 @@ const Sidebar = () => {
         }
     });
     const { data: authUser } = useQuery({ queryKey: ["authUser"] });
-    
+
 
     return (
         <div className="md:flex-[2_2_0] w-18 max-w-52">
@@ -77,10 +76,10 @@ const Sidebar = () => {
                                 <p className="text-slate-500 text-sm">@{authUser.username}</p>
                             </div>
                             <BiLogOut className="w-5 h-5 cursor-pointer"
-                                onClick={(e) => { 
+                                onClick={(e) => {
                                     e.preventDefault();
                                     logout();
-                                 }}
+                                }}
                             />
                         </div>
 

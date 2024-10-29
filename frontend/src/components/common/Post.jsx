@@ -1,8 +1,5 @@
-import { FaRegComment } from "react-icons/fa";
+import { FaRegComment, FaRegHeart, FaRegBookmark, FaTrash } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa6";
-import { FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -16,16 +13,16 @@ const Post = ({ post }) => {
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
   const queryClient = useQueryClient();
 
-  const postOwner = post.postUser;
-  const isLiked = post.likes.includes(authUser._id);
+  // Destructuring post properties for clarity 
+  const { _id: postId, postUser, createdAt, text, img, likes, comments } = post;
+  const isLiked = likes.includes(authUser._id);
+  const isMyPost = authUser._id === postUser._id;
+  const formattedDate = formatPostDate(createdAt);
 
-  const isMyPost = authUser._id === post.postUser._id;
-  const formattedDate = formatPostDate(post.createdAt);
-
-  const { mutate: deletePost, isPending, isDeleting } = useMutation({
+  const { mutate: deletePost, isPending: isDeleting } = useMutation({
     mutationFn: async () => {
       try {
-        const res = await fetch(`/api/posts/${post._id}`, {
+        const res = await fetch(`/api/posts/${postId}`, {
           method: "DELETE"
         });
 
@@ -39,13 +36,14 @@ const Post = ({ post }) => {
     onSuccess: () => {
       toast.success("Post deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
-    } 
+    },
+    onError: (error) => toast.error(error.message),
   });
 
   const { mutate: likePost, isPending: isLiking } = useMutation({
     mutationFn: async () => {
       try {
-        const res = await fetch(`/api/posts/like/${post._id}`, {
+        const res = await fetch(`/api/posts/like/${postId}`, {
           method: "POST",
         });
         const data = await res.json();
@@ -68,16 +66,14 @@ const Post = ({ post }) => {
         });
       });
     },
-    onError: (error) => {
-      toast.error(error.message);
-    }
+    onError: (error) => toast.error(error.message),
+    
   });
-
 
   const { mutate: commentPost, isPending: isCommenting } = useMutation({
     mutationFn: async () => {
       try {
-        const res = await fetch(`/api/posts/comment/${post._id}`, {
+        const res = await fetch(`/api/posts/comment/${postId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -99,14 +95,11 @@ const Post = ({ post }) => {
       setComment("");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
-    onError: (error) => {
-      toast.error(error.message);
-    }
+    onError: (error) => toast.error(error.message),
+    
   });
 
-  const handleDeletePost = () => {
-    deletePost();
-  };
+  const handleDeletePost = () => deletePost();
 
   const handlePostComment = (e) => {
     e.preventDefault();
@@ -124,18 +117,18 @@ const Post = ({ post }) => {
     <>
       <div className="flex gap-2 items-start p-4 border-b border-gray-700">
         <div className="avatar">
-          <Link to={`/profile/${postOwner.username}`} className="w-8 rounded-full overflow-hidden">
-            <img src={postOwner.profileImg || "/avatar-placeholder.png"} />
+          <Link to={`/profile/${postUser.username}`} className="w-8 rounded-full overflow-hidden">
+            <img src={postUser.profileImg || "/avatar-placeholder.png"} />
           </Link>
         </div>
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-2 items-center">
-            <Link to={`/profile/${postOwner.username}`} className="font-bold">
-              {postOwner.fullName}
+            <Link to={`/profile/${postUser.username}`} className="font-bold">
+              {postUser.fullName}
             </Link>
             <span className="text-gray-700 flex gap-1 text-sm">
-              <Link to={`/profile/${postOwner.username}`}>@{postOwner.username}</Link>
+              <Link to={`/profile/${postUser.username}`}>@{postUser.username}</Link>
               <span>.</span>
               <span>{formattedDate}</span>
             </span>
@@ -151,10 +144,10 @@ const Post = ({ post }) => {
             )}
           </div>
           <div className="flex flex-col gap-3 overflow-hidden">
-            <span>{post.text}</span>
-            {post.img && (
+            <span>{text}</span>
+            {img && (
               <img
-                src={post.img}
+                src={img}
                 className="h-80 object-contain rounded-lg border border-gray-700"
                 alt=''
               />
@@ -168,21 +161,20 @@ const Post = ({ post }) => {
               >
                 <FaRegComment className="w-4 h-4 text-slate-500 group-hover:text-sky-400" />
                 <span className="text-sm text-slate-500 group-hover:text-sky-400">
-                  {post.comments.length}
+                  {comments.length}
                 </span>
               </div>
-              
-              
-              <dialog id={`comments_modal${post._id}`} className="modal border-none outline-none" >
+
+              <dialog id={`comments_modal${postId}`} className="modal border-none outline-none" >
                 <div className="modal-box rounded border border-gray-600">
                   <h3 className="font-bold text-lg mb-4">Comments</h3>
                   <div className="flex flex-col gap-3 max-h-60 overflow-auto">
-                    {post.comments.length === 0 && (
+                    {comments.length === 0 && (
                       <p className="text-sm text-slate-500">
                         No Comments yet, Be the first one
                       </p>
                     )}
-                    {post.comments.map((comment) => (
+                    {comments.map((comment) => (
                       <div key={comment._id} className="flex gap-2 items-start">
                         <div className="avatar">
                           <div className="w-8 rounded-full">
@@ -216,7 +208,7 @@ const Post = ({ post }) => {
                     />
 
                     <button className="btn btn-primary rounded-full btn-sm text-white px-4">
-                      {isCommenting ? <LoadingSpinner size="md" /> : "Post" }
+                      {isCommenting ? <LoadingSpinner size="md" /> : "Post"}
                     </button>
                   </form>
                 </div>
@@ -224,6 +216,7 @@ const Post = ({ post }) => {
                   <button className="outline-none">Close</button>
                 </form>
               </dialog>
+
               <div className="flex gap-1 items-center group cursor-pointer">
                 <BiRepost className="w-6 h-6 text-slate-500 group-hover:text-green-500" />
                 <span className="text-sm text-slate-500 group-hover:text-green-500">0</span>

@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
 import XSvg from "../../../components/svgs/X";
-
 import { MdOutlineMail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
@@ -10,10 +8,8 @@ import { MdDriveFileRenameOutline } from "react-icons/md";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-
 const SignUpPage = () => {
 
-  // // React hook to manage the state
   const [formData, setFormData] = useState({
     fullName: "",
     username: "",
@@ -21,10 +17,8 @@ const SignUpPage = () => {
     password: ""
   });
 
-  // // query client used to to control queries
   const queryClient = useQueryClient();
 
-  // Mutation hook to manage 
   const { mutate, isError, isPending, error } = useMutation({
     mutationFn: async ({ fullName, username, email, password }) => {
       try {
@@ -52,13 +46,11 @@ const SignUpPage = () => {
     },
   });
 
-  // Sends request to submit data to server
   const handleSubmit = (e) => {
     e.preventDefault();
     mutate(formData);
   };
 
-  // Assigns the form data to the state
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   };

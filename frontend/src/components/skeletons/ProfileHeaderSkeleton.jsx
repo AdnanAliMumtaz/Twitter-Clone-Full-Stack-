@@ -21,4 +21,5 @@ const ProfileHeaderSkeleton = () => {
 		</div>
 	);
 };
+
 export default ProfileHeaderSkeleton;

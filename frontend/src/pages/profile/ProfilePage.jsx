@@ -1,32 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
 import Posts from "../../components/common/Posts";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
 import EditProfileModal from "./EditProfileModal";
-
-// import { POSTS } from "../../utils/db/dummy";
-
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import useFollow from "../../hooks/useFollow";
 import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 import { formatMemberSinceDate } from "../../utils/date";
 
 const ProfilePage = () => {
     const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+
     const [coverImg, setCoverImg] = useState(null);
     const [profileImg, setProfileImg] = useState(null);
     const [feedType, setFeedType] = useState("posts");
-
     const coverImgRef = useRef(null);
     const profileImgRef = useRef(null);
 
     const { username } = useParams();
-
     const { follow, isPending } = useFollow();
 
     const { data: user, isLoading, refetch, isRefetching } = useQuery({
@@ -60,10 +55,7 @@ const ProfilePage = () => {
         }
     });
 
-
-
     const { isUpdatingProfile, updateProfile } = useUpdateUserProfile();
-
     const isMyProfile = authUser._id === user?._id;
     const memberSinceDate = formatMemberSinceDate(user?.createdAt);
     const amIFollowing = authUser?.following.includes(user?._id);
@@ -133,7 +125,7 @@ const ProfilePage = () => {
                                 </div>
                             </div>
                             <div className="flex justify-end px-4 mt-5">
-                                {isMyProfile && <EditProfileModal authUser={authUser}/>}
+                                {isMyProfile && <EditProfileModal authUser={authUser} />}
                                 {!isMyProfile && (
                                     <button
                                         className="btn btn-outline rounded-full btn-sm"
@@ -148,7 +140,7 @@ const ProfilePage = () => {
                                     <button
                                         className="btn btn-primary rounded-full btn-sm text-white px-4 ml-2"
                                         onClick={async () => {
-                                            await updateProfile({coverImg, profileImg});
+                                            await updateProfile({ coverImg, profileImg });
                                             setProfileImg(null);
                                             setCoverImg(null);
                                         }}
