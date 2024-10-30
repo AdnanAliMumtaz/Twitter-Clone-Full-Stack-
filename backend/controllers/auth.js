@@ -90,7 +90,7 @@ const login = async (req, res) => {
             followers: User.followers || [],
             following: User.following || [],
             profileImg: User.profileImg || null,
-            coverImg: User.coverImg || null
+            coverImg: User.coverImg || null,
         });
 
     } catch (error) {

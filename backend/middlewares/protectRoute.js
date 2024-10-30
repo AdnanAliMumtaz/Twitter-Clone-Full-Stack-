@@ -2,10 +2,11 @@ const { user } = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 const protectRoute = async (req, res, next) => {
+    
     try {
-
         // Access the token from cookies
         const token = req.cookies.jwt;
+        console.log("This is token here: ", req.cookies.jwt);
         if (!token) {
             return res.status(401).json({ error: "Unauthorised: No Token Provided!" });
         }
