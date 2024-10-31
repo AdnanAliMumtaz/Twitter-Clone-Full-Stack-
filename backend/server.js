@@ -34,7 +34,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/notifications', notificationsRoutes);
 
-// 
+// Server static files when in production environment
 if (process.env.NODE_ENV === "production")
 {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
