@@ -67,3 +67,5 @@ You can view this project live [here](https://twitter-clone-aeux.onrender.com). 
     npm run start
 
 6. **Access the Application** Open your browser and navigate to `http://localhost:PORT`, replacing `PORT` with the value set in your `.env` file.
+
+##
