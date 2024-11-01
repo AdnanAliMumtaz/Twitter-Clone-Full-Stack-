@@ -1,6 +1,5 @@
 # Twitter Clone
 
-## Introduction
 This is a full-stack web application built using the MERN (MongoDB, Express.js, React, Node.js) stack, designed to mimic the core functionalities of the popular social media platform, Twitter/X. This application allows users to create accounts, post tweets, follow other users, and engage with tweets through likes and comments. The aim of this project is to explore the process of building a dynamic, interactive social platform and to demonstrate the potential of the MERN stack for creating full-featured applications.
 
 ## What Does This Project Do? (Functionalities)
