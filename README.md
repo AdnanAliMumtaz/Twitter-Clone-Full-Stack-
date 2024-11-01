@@ -19,6 +19,7 @@ This is a full-stack web application built using the MERN (MongoDB, Express.js, 
 - **JWT Authentication**: Secure user authentication with stateless session management.
 - **React Query**: Library for data fetching, caching, and synchronization.
 - **RESTful APIs**: Standardised approach for client-server communication.
+- **Manual Testing with Postman**: For testing API endpoints to ensure proper functionality and response handling.
 
 ## Overview of the Project
 You can view this project live [here](https://twitter-clone-aeux.onrender.com). Please note that this deployment uses the free version of Render, so the server may occasionally go down, temporarily affecting access to the application.
