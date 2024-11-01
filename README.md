@@ -26,13 +26,14 @@ You can view this project live [here](https://twitter-clone-aeux.onrender.com). 
 
 ## See Screenshots for an Overview of Its Features
 <div align="center">
-   <img src="https://github.com/user-attachments/assets/f73ae1c5-4ecd-4546-a548-77302a375d81" alt="Screenshot 2024-11-01 at 8 15 51 AM" width="750">
-   <img src="https://github.com/user-attachments/assets/ad22a4dd-7cdb-4349-9b77-4a5bc906ef71" alt="Screenshot 2024-11-01 at 8 15 44 AM" width="750">
-   <img src="https://github.com/user-attachments/assets/3efd2954-b41a-4d13-a244-225582382f59" alt="Screenshot 2024-11-01 at 9 23 22 AM" width="750">
-   <img src="https://github.com/user-attachments/assets/0beca9a5-05e2-49d5-a8c7-4daa18f63de3" alt="Screenshot 2024-11-01 at 9 23 36 AM" width="750">
-   <img src="https://github.com/user-attachments/assets/cf426866-0c87-4347-89c3-65cb821a8e01" alt="Screenshot 2024-11-01 at 9 23 44 AM" width="750">
-   <img src="https://github.com/user-attachments/assets/277c0114-6512-4ccb-81ef-8fd2806c98b7" alt="Screenshot 2024-11-01 at 9 23 51 AM" width="750">
-   <img src="https://github.com/user-attachments/assets/efbdddfc-843a-484e-a8c3-4c0df8549507" alt="Screenshot 2024-11-01 at 9 25 37 AM" width="750">
+   <img src="https://github.com/user-attachments/assets/f73ae1c5-4ecd-4546-a548-77302a375d81" alt="SignUp Page" width="750">
+   <img src="https://github.com/user-attachments/assets/ad22a4dd-7cdb-4349-9b77-4a5bc906ef71" alt="Login Page" width="750">
+   <img src="https://github.com/user-attachments/assets/3efd2954-b41a-4d13-a244-225582382f59" alt="Home Page" width="750">
+   <img src="https://github.com/user-attachments/assets/0beca9a5-05e2-49d5-a8c7-4daa18f63de3" alt="Following Posts" width="750">
+   <img src="https://github.com/user-attachments/assets/cf426866-0c87-4347-89c3-65cb821a8e01" alt="Notification Page" width="750">
+   <img src="https://github.com/user-attachments/assets/277c0114-6512-4ccb-81ef-8fd2806c98b7" alt="Personal Posts Page" width="750">
+   <img src="https://github.com/user-attachments/assets/c2339575-a222-4932-9fbe-6232efb3ac00" alt="Liked Posts Page" width="750">
+   <img src="https://github.com/user-attachments/assets/efbdddfc-843a-484e-a8c3-4c0df8549507" alt="Edit Personal Details Page" width="750">
 </div>
 
 ## Installation & Usage
