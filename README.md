@@ -23,7 +23,7 @@ This is a full-stack web application built using the MERN (MongoDB, Express.js, 
 ## Overview of the Project
 You can view this project live [here](https://twitter-clone-aeux.onrender.com). Please note that this deployment uses the free version of Render, so the server may occasionally go down, temporarily affecting access to the application.
 
-## See Screenshots for an Overview of Its Features
+### See Screenshots for an Overview of Its Features
 <div align="center">
    <img src="https://github.com/user-attachments/assets/f73ae1c5-4ecd-4546-a548-77302a375d81" alt="SignUp Page" width="750">
    <img src="https://github.com/user-attachments/assets/ad22a4dd-7cdb-4349-9b77-4a5bc906ef71" alt="Login Page" width="750">
